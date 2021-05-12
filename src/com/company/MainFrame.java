@@ -128,7 +128,22 @@ public class MainFrame extends JFrame implements MessageListener {
             JOptionPane.showMessageDialog(this, "Введите текст сообщения", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        User us = new User("Egor",  "127.0.0.1");
+        User us1 = new User("Egor1",  "127.0.0.2");
+        UserInfo.add(us);
+        UserInfo.add(us1);
+        check = false;
+        for(int i = 0; i < UserInfo.size(); i++) {
+            if(UserInfo.get(i).getAddres().equals(destinationAddress))
+                check = true;
+        }
+        User users = new User(senderName,  destinationAddress);
+        UserInfo.add(users);
 
+        if (check == false) {
+            dialogFrame = new DialogFrame(users, MainFrame.this);
+            check = true;
+        }
         instantMessager.sendMessage(senderName, destinationAddress, message, SERVER_PORT);
         textAreaIncoming.setText(senderName + " (" + destinationAddress + ") : " + message);
         textAreaIncoming.append("\n" + "Я -> " + destinationAddress + ": " + message + "\n");
